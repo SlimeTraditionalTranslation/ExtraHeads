@@ -22,8 +22,6 @@ import me.mrCookieSlime.Slimefun.bstats.bukkit.Metrics;
 import me.mrCookieSlime.Slimefun.cscorelib2.config.Config;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import me.mrCookieSlime.Slimefun.cscorelib2.skull.SkullItem;
-import me.mrCookieSlime.Slimefun.cscorelib2.updater.GitHubBuildsUpdater;
-import me.mrCookieSlime.Slimefun.cscorelib2.updater.Updater;
 
 public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
 
@@ -42,13 +40,6 @@ public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
 
         // Setting up bStats
         new Metrics(this, 5650);
-
-        if (getDescription().getVersion().startsWith("DEV - ")) {
-            // If we are using a development build, we want to switch to our custom
-            Updater updater = new GitHubBuildsUpdater(this, getFile(), "TheBusyBiscuit/ExtraHeads/master");
-
-            if (cfg.getBoolean("options.auto-update")) updater.start();
-        }
 
         category = new Category(new NamespacedKey(this, "heads"), new CustomItem(SkullItem.fromHash("5f1379a82290d7abe1efaabbc70710ff2ec02dd34ade386bc00c930c461cf932"), "&7額外頭顱", "", "&a> 點擊開啟"), 1);
         recipeType = new RecipeType(new NamespacedKey(this, "decapitation"), new CustomItem(Material.IRON_SWORD, "&6殺死指定怪物"));
@@ -139,6 +130,6 @@ public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public String getBugTrackerURL() {
-        return "https://github.com/TheBusyBiscuit/ExtraHeads/issues";
+        return "https://github.com/xMikux/ExtraHeads/issues";
     }
 }
