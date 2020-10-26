@@ -18,7 +18,7 @@ import me.mrCookieSlime.CSCoreLibPlugin.general.String.StringUtils;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.bstats.bukkit.Metrics;
+//import me.mrCookieSlime.Slimefun.bstats.bukkit.Metrics;
 import me.mrCookieSlime.Slimefun.cscorelib2.config.Config;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import me.mrCookieSlime.Slimefun.cscorelib2.skull.SkullItem;
@@ -39,7 +39,7 @@ public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
         logger = getLogger();
 
         // Setting up bStats
-        new Metrics(this, 5650);
+        //new Metrics(this, 5650);
 
         category = new Category(new NamespacedKey(this, "heads"), new CustomItem(SkullItem.fromHash("5f1379a82290d7abe1efaabbc70710ff2ec02dd34ade386bc00c930c461cf932"), "&7額外頭顱", "", "&a> 點擊開啟"), 1);
         recipeType = new RecipeType(new NamespacedKey(this, "decapitation"), new CustomItem(Material.IRON_SWORD, "&6殺死指定怪物"));

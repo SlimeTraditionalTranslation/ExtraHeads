@@ -4,7 +4,8 @@
 通過殺死相應的生物來獲得新的頭顱.<br>
 你可以使用斬首之劍增加機率獲得.<br>
 
-[官方原碼連結](https://github.com/TheBusyBiscuit/ExtraHeads)
+此為**非官方**版本, 請勿在該作者的問題追蹤內回報!
+[原作者連結](https://github.com/TheBusyBiscuit/ExtraHeads)
 
 ## 下載額外頭顱
 繁體翻譯版: [構建頁面](https://xmikux.github.io/builds/xMikux/ExtraHeads/master)<br>
