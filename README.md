@@ -20,7 +20,7 @@
 您可以在Discord上找到官方SlimeFun社區!
 點擊下面的徵標來加入伺服器.
 <p align="center">
-  <a href="https://discord.gg/fsD4Bkh">
+  <a href="https://discord.gg/slimefun">
     <img src="https://img.shields.io/discord/565557184348422174?color=7289DA&label=Discord&style=for-the-badge" alt="Discord Invite"/>
   </a>
 </p>
