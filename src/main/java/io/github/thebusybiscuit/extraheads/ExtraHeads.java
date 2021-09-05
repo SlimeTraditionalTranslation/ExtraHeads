@@ -44,8 +44,8 @@ public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
         //new Metrics(this, 5650);
 
         /*if (cfg.getBoolean("options.auto-update") && getDescription().getVersion().startsWith("DEV - ")) {
-        *    new GitHubBuildsUpdater(this, getFile(), "TheBusyBiscuit/ExtraHeads/master").start();
-        *}*/
+            new GitHubBuildsUpdater(this, getFile(), "TheBusyBiscuit/ExtraHeads/master").start();
+        }*/
 		
         itemGroup = new ItemGroup(new NamespacedKey(this, "heads"), new CustomItemStack(PlayerHead.getItemStack(PlayerSkin.fromHashCode("5f1379a82290d7abe1efaabbc70710ff2ec02dd34ade386bc00c930c461cf932")), "&7額外頭顱", "", "&a> 點擊開啟"), 1);
         recipeType = new RecipeType(new NamespacedKey(this, "decapitation"), new CustomItemStack(Material.IRON_SWORD, "&6殺死指定怪物"));
