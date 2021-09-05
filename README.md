@@ -5,7 +5,7 @@
 你可以使用斬首之劍增加機率獲得.<br>
 
 > 此為**非官方**版本, 請勿在該作者問題追蹤內回報! <br>
-> [原作者連結](https://github.com/TheBusyBiscuit/ExtraHeads) | [非官方Discord](https://discord.gg/GF4CwjFXT9)
+> [原作連結](https://github.com/TheBusyBiscuit/ExtraHeads) | [非官方Discord](https://discord.gg/GF4CwjFXT9)
 
 ## 下載額外頭顱
 | 非官方繁體中文版 | 官方英文版 |
