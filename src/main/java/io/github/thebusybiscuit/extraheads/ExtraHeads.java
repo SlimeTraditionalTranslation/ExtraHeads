@@ -12,16 +12,18 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.skins.PlayerHead;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.skins.PlayerSkin;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.GitHubBuildsUpdater;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.cscorelib2.config.Config;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
-import me.mrCookieSlime.Slimefun.cscorelib2.skull.SkullItem;
 
 public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
 
@@ -30,7 +32,7 @@ public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
     private Config cfg;
     private Logger logger;
 
-    private Category category;
+    private ItemGroup itemGroup;
     private RecipeType recipeType;
 
     @Override
@@ -41,15 +43,19 @@ public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
         // Setting up bStats
         //new Metrics(this, 5650);
 
-        category = new Category(new NamespacedKey(this, "heads"), new CustomItem(SkullItem.fromHash("5f1379a82290d7abe1efaabbc70710ff2ec02dd34ade386bc00c930c461cf932"), "&7額外頭顱", "", "&a> 點擊開啟"), 1);
-        recipeType = new RecipeType(new NamespacedKey(this, "decapitation"), new CustomItem(Material.IRON_SWORD, "&6殺死指定怪物"));
+        if (cfg.getBoolean("options.auto-update") && getDescription().getVersion().startsWith("EFI - ")) {
+            new GitHubBuildsUpdater(this, getFile(), "SlimeTraditionalTranslation/ExtraHeads/master").start();
+        }
+		
+        itemGroup = new ItemGroup(new NamespacedKey(this, "heads"), new CustomItemStack(PlayerHead.getItemStack(PlayerSkin.fromHashCode("5f1379a82290d7abe1efaabbc70710ff2ec02dd34ade386bc00c930c461cf932")), "&7Extra Heads", "", "&a> Click to open"), 1);
+        recipeType = new RecipeType(new NamespacedKey(this, "decapitation"), new CustomItemStack(Material.IRON_SWORD, "&6殺死指定怪物"));
 
-        registerHead("蝙蝠頭", EntityType.BAT, "2796aa6d18edc5b724bd89e983bc3215a41bf775d112635e9b5835d1b8ad20cb");
+        registerHead("蝙蝠 頭", EntityType.BAT, "2796aa6d18edc5b724bd89e983bc3215a41bf775d112635e9b5835d1b8ad20cb");
         registerHead("烈焰使者 頭", EntityType.BLAZE, "b78ef2e4cf2c41a2d14bfde9caff10219f5b1bf5b35a49eb51c6467882cb5f0");
         registerHead("洞穴蜘蛛 頭", EntityType.CAVE_SPIDER, "41645dfd77d09923107b3496e94eeb5c30329f97efc96ed76e226e98224");
         registerHead("雞 頭", EntityType.CHICKEN, "1638469a599ceef7207537603248a9ab11ff591fd378bea4735b346a7fae893");
         registerHead("牛 頭", EntityType.COW, "5d6c6eda942f7f5f71c3161c7306f4aed307d82895f9d2b07ab4525718edc5");
-        registerHead("海豚 頭", EntityType.DOLPHIN, "cefe7d803a45aa2af1993df2544a28df849a762663719bfefc58bf389ab7f5");
+        registerHead("海豚 頭, EntityType.DOLPHIN, "cefe7d803a45aa2af1993df2544a28df849a762663719bfefc58bf389ab7f5");
         registerHead("沉屍 頭", EntityType.DROWNED, "c84df79c49104b198cdad6d99fd0d0bcf1531c92d4ab6269e40b7d3cbbb8e98c");
         registerHead("遠古深海守衛 頭", EntityType.ELDER_GUARDIAN, "4adc4a6f53afa116027b51d6f2e433ee7afa5d59b2ffa04780be464fa5d61a");
         registerHead("安德 頭", EntityType.ENDERMAN, "7a59bb0a7a32965b3d90d8eafa899d1835f424509eadd4e6b709ada50b9cf");
@@ -67,7 +73,7 @@ public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
         registerHead("鸚鵡 頭", EntityType.PARROT, "a4ba8d66fecb1992e94b8687d6ab4a5320ab7594ac194a2615ed4df818edbc3");
         registerHead("豬 頭", EntityType.PIG, "621668ef7cb79dd9c22ce3d1f3f4cb6e2559893b6df4a469514e667c16aa4");
         registerHead("北極熊 頭", EntityType.POLAR_BEAR, "442123ac15effa1ba46462472871b88f1b09c1db467621376e2f71656d3fbc");
-        registerHead("兔兔 頭", EntityType.RABBIT, "ff1559194a175935b8b4fea6614bec60bf81cf524af6f564333c555e657bc");
+        registerHead("兔 頭", EntityType.RABBIT, "ff1559194a175935b8b4fea6614bec60bf81cf524af6f564333c555e657bc");
         registerHead("羊 頭", EntityType.SHEEP, "f31f9ccc6b3e32ecf13b8a11ac29cd33d18c95fc73db8a66c5d657ccb8be70");
         registerHead("界伏蚌 頭", EntityType.SHULKER, "b1d3534d21fe8499262de87affbeac4d25ffde35c8bdca069e61e1787ff2f");
         registerHead("史萊姆 頭", EntityType.SLIME, "16ad20fc2d579be250d3db659c832da2b478a73a698b7ea10d18c9162e4d9b5");
@@ -82,15 +88,15 @@ public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
         registerHead("凋零 頭", EntityType.WITHER, "cdf74e323ed41436965f5c57ddf2815d5332fe999e68fbb9d6cf5c8bd4139f");
         registerHead("殭屍村民 頭", EntityType.ZOMBIE_VILLAGER, "a6224941314bca2ebbb66b10ffd94680cc98c3435eeb71a228a08fd42c24db");
 
-        if (SlimefunPlugin.getMinecraftVersion().isAtLeast(MinecraftVersion.MINECRAFT_1_14)) {
+        if (Slimefun.getMinecraftVersion().isAtLeast(MinecraftVersion.MINECRAFT_1_14)) {
             registerHead("劫毀獸 頭", EntityType.RAVAGER, "1cb9f139f9489d86e410a06d8cbc670c8028137508e3e4bef612fe32edd60193");
             registerHead("掠奪者 頭", EntityType.PILLAGER, "4aee6bb37cbfc92b0d86db5ada4790c64ff4468d68b84942fde04405e8ef5333");
             registerHead("狐狸 頭", EntityType.FOX, "46cff7a19e683a08e4587ea1457880313d5f341f346ceb5b0551195d810e3");
             registerHead("貓熊 頭", EntityType.PANDA, "7818b681cace1c641919f53edadecb142330d089a826b56219138c33b7a5e0db");
             registerHead("流浪商人 頭", EntityType.WANDERING_TRADER, "5f1379a82290d7abe1efaabbc70710ff2ec02dd34ade386bc00c930c461cf932");
         }
-
-        if (SlimefunPlugin.getMinecraftVersion().isBefore(MinecraftVersion.MINECRAFT_1_16)) {
+        
+        if (Slimefun.getMinecraftVersion().isBefore(MinecraftVersion.MINECRAFT_1_16)) {
             registerHead("殭屍豬人 頭", EntityType.valueOf("PIG_ZOMBIE"), "74e9c6e98582ffd8ff8feb3322cd1849c43fb16b158abb11ca7b42eda7743eb");
         }
         else {
@@ -108,7 +114,7 @@ public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
         try {
             double chance = cfg.getOrSetDefault("chances." + type.toString(), 5.0);
             SlimefunItemStack item = new SlimefunItemStack(type.toString() + "_HEAD", texture, "&r" + name);
-            new MobHead(category, item, recipeType, new CustomItem(item, "&r殺 1 " + ChatUtils.humanize(type.name()), "&7機率: &e" + chance + "%")).register(this, () -> mobs.put(type, item));
+            new MobHead(itemGroup, item, recipeType, new CustomItemStack(item, "&r殺 1 " + ChatUtils.humanize(type.name()), "&7機率: &e" + chance + "%")).register(this, () -> mobs.put(type, item));
         }
         catch (Exception x) {
             logger.log(Level.WARNING, x, () -> "Could not load Mob Head for Entity: " + type);
@@ -130,6 +136,6 @@ public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public String getBugTrackerURL() {
-        return "https://github.com/xMikux/ExtraHeads/issues";
+        return "https://github.com/SlimeTraditionalTranslation/ExtraHeads/issues";
     }
 }

@@ -1,3 +1,8 @@
+.classpath
+.project
+*.iml
+/.idea/
+/.settings/
 /bin/
 /target/
 /plugins/
