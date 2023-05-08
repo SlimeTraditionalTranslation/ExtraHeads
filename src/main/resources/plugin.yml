@@ -1,7 +1,6 @@
 name: ExtraHeads
 version: ${project.version}
 author: TheBusyBiscuit
-description: 黏液科技附加 額外頭顱 繁體翻譯版.
 depend: [Slimefun]
 
 main: io.github.thebusybiscuit.extraheads.ExtraHeads
