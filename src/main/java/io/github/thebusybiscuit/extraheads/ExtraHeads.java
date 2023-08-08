@@ -3,12 +3,13 @@ package io.github.thebusybiscuit.extraheads;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.EnumMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.unpixelt.locale.Locale;
 import de.unpixelt.locale.Translate;
+
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Material;
@@ -17,17 +18,18 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
+import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
-import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.skins.PlayerHead;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.skins.PlayerSkin;
 import io.github.bakedlibs.dough.updater.GitHubBuildsUpdaterTR;
+import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
+import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
+
 import org.mini2Dx.gettext.GetText;
 import org.mini2Dx.gettext.PoFile;
 
@@ -49,11 +51,11 @@ public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
         // Setting up bStats
         new Metrics(this, 5650);
 
-        if (cfg.getBoolean("options.auto-update") && getDescription().getVersion().startsWith("EFI - ")) {
+        if (cfg.getBoolean("options.auto-update") && getDescription().getVersion().startsWith("Build_STCT - ")) {
             new GitHubBuildsUpdaterTR(this, getFile(), "SlimeTraditionalTranslation/ExtraHeads/master").start();
         }
 
-        GetText.setLocale(java.util.Locale.TRADITIONAL_CHINESE);
+        GetText.setLocale(Locale.TRADITIONAL_CHINESE);
         InputStream inputStream = getClass().getResourceAsStream("/translations/zh_tw.po");
         if (inputStream == null) {
             getLogger().severe("錯誤！無法找到翻譯檔案，請回報給翻譯者。");
@@ -62,7 +64,7 @@ public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
         } else {
             getLogger().info("載入繁體翻譯檔案...");
             try {
-                PoFile poFile = new PoFile(java.util.Locale.TRADITIONAL_CHINESE, inputStream);
+                PoFile poFile = new PoFile(Locale.TRADITIONAL_CHINESE, inputStream);
                 GetText.add(poFile);
             } catch (ParseCancellationException | IOException e) {
                 getLogger().severe("錯誤！讀取翻譯時發生錯誤，請回報給翻譯者：" + e.getMessage());
@@ -71,8 +73,21 @@ public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
             }
         }
 
-        itemGroup = new ItemGroup(new NamespacedKey(this, "heads"), new CustomItemStack(PlayerHead.getItemStack(PlayerSkin.fromHashCode("5f1379a82290d7abe1efaabbc70710ff2ec02dd34ade386bc00c930c461cf932")), GetText.tr("&7Extra Heads"), "", GetText.tr("&a> Click to open")), 1);
-        recipeType = new RecipeType(new NamespacedKey(this, "decapitation"), new CustomItemStack(Material.IRON_SWORD, GetText.tr("&6Kill the specified Mob")));
+        itemGroup = new ItemGroup(
+            new NamespacedKey(this, "heads"),
+            new CustomItemStack(
+                SlimefunUtils.getCustomHead("5f1379a82290d7abe1efaabbc70710ff2ec02dd34ade386bc00c930c461cf932"),
+                GetText.tr("&7Extra Heads")
+            ),
+            1
+        );
+        recipeType = new RecipeType(
+            new NamespacedKey(this, "decapitation"),
+            new CustomItemStack(
+                Material.IRON_SWORD,
+                GetText.tr("&6Kill the specified Mob")
+            )
+        );
 
         registerHead(EntityType.BAT, "2796aa6d18edc5b724bd89e983bc3215a41bf775d112635e9b5835d1b8ad20cb");
         registerHead(EntityType.BLAZE, "b78ef2e4cf2c41a2d14bfde9caff10219f5b1bf5b35a49eb51c6467882cb5f0");
@@ -111,20 +126,14 @@ public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
         registerHead(EntityType.WITCH, "ddedbee42be472e3eb791e7dbdfaf18c8fe593c638ba1396c9ef68f555cbce");
         registerHead(EntityType.WITHER, "cdf74e323ed41436965f5c57ddf2815d5332fe999e68fbb9d6cf5c8bd4139f");
         registerHead(EntityType.ZOMBIE_VILLAGER, "a6224941314bca2ebbb66b10ffd94680cc98c3435eeb71a228a08fd42c24db");
-        registerHead(EntityType.CAT, "2f6ec090ed3ed2dddbb511ee2a12551131019939c062a7761371df85549f9fad");
         registerHead(EntityType.RAVAGER, "1cb9f139f9489d86e410a06d8cbc670c8028137508e3e4bef612fe32edd60193");
         registerHead(EntityType.PILLAGER, "4aee6bb37cbfc92b0d86db5ada4790c64ff4468d68b84942fde04405e8ef5333");
         registerHead(EntityType.FOX, "46cff7a19e683a08e4587ea1457880313d5f341f346ceb5b0551195d810e3");
         registerHead(EntityType.PANDA, "7818b681cace1c641919f53edadecb142330d089a826b56219138c33b7a5e0db");
         registerHead(EntityType.WANDERING_TRADER, "5f1379a82290d7abe1efaabbc70710ff2ec02dd34ade386bc00c930c461cf932");
-        registerHead(EntityType.TRADER_LLAMA, "15ad6b69cc6b4769d3516a0ce98b99b2a5d406fea4912dec570ea4a4f2bcc0ff");
-        registerHead(EntityType.BEE, "259001a851bb1b9e9c05de5d5c68b1ea0dc8bd86babf188e0aded8f912c07d0d");
         registerHead(EntityType.PIGLIN, "11d18bbd0d795b9ac8efaad655e3d0c59fcbb9b964c2a9948ef537f4a3fbbf87");
         registerHead(EntityType.ZOMBIFIED_PIGLIN, "e935842af769380f78e8b8a88d1ea6ca2807c1e5693c2cf797456620833e936f");
         registerHead(EntityType.STRIDER, "18a9adf780ec7dd4625c9c0779052e6a15a451866623511e4c82e9655714b3c1");
-        registerHead(EntityType.HOGLIN, "9bb9bc0f01dbd762a08d9e77c08069ed7c95364aa30ca1072208561b730e8d75");
-        registerHead(EntityType.ZOGLIN, "e67e18602e03035ad68967ce090235d8996663fb9ea47578d3a7ebbc42a5ccf9");
-        registerHead(EntityType.PIGLIN_BRUTE, "3e300e9027349c4907497438bac29e3a4c87a848c50b34c21242727b57f4e1cf");
 
         if (Slimefun.getMinecraftVersion().isAtLeast(MinecraftVersion.MINECRAFT_1_17)) {
             registerHead(EntityType.AXOLOTL, "5c138f401c67fc2e1e387d9c90a9691772ee486e8ddbf2ed375fc8348746f936");
@@ -133,10 +142,19 @@ public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
         }
 
         if (Slimefun.getMinecraftVersion().isAtLeast(MinecraftVersion.MINECRAFT_1_19)) {
-            registerHead(EntityType.ALLAY, "e1c59dccde4b8535500dcf6794ca450663f607290e2510f6d8eb1e5eb71da5af");
-            registerHead(EntityType.FROG, "27bcccc125a4110434a85c40ada039d050f14ef7db34a3444067310f8ce69606");
+            // https://minecraft-heads.com/custom-heads/animals/61373-allay
+            registerHead(EntityType.ALLAY, "df5de940bfe499c59ee8dac9f9c3919e7535eff3a9acb16f4842bf290f4c679f");
+            // https://minecraft-heads.com/custom-heads/animals/63169-cold-frog
+            registerHead(EntityType.FROG, "45852a95928897746012988fbd5dbaa1b70b7a5fb65157016f4ff3f245374c08");
+            // https://minecraft-heads.com/custom-heads/animals/51348-tadpole
             registerHead(EntityType.TADPOLE, "987035f5352334c2cba6ac4c65c2b9059739d6d0e839c1dd98d75d2e77957847");
-            registerHead(EntityType.WARDEN, "c6f74361fb00490a0a98eeb814544ecdd775cb55633dbb114e60d27004cb1020");
+        }
+
+        if (Slimefun.getMinecraftVersion().isAtLeast(MinecraftVersion.MINECRAFT_1_20)) {
+            // https://minecraft-heads.com/custom-heads/animals/62878-camel
+            registerHead(EntityType.CAMEL, "3642c9f71131b5df4a8c21c8c6f10684f22abafb8cd68a1d55ac4bf263a53a31");
+            // https://minecraft-heads.com/custom-heads/animals/64113-sniffer
+            registerHead(EntityType.SNIFFER, "fe5a8341c478a134302981e6a7758ea4ecfd8d62a0df4067897e75502f9b25de");
         }
 
         cfg.save();
@@ -147,11 +165,22 @@ public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
     private void registerHead(EntityType type, String texture) {
         try {
             double chance = cfg.getOrSetDefault("chances." + type.toString(), 5.0);
-            String EntityName = Translate.getEntity(Locale.zh_tw, type);
-            SlimefunItemStack item = new SlimefunItemStack(type + "_HEAD", texture, "&r" + EntityName + GetText.tr(" Head"));
-            new MobHead(itemGroup, item, recipeType, new CustomItemStack(item, GetText.tr("&rKill 1 ") + EntityName, GetText.tr("&7Chance: &e{0}%", chance))).register(this, () -> mobs.put(type, item));
-        }
-        catch (Exception x) {
+            SlimefunItemStack item = new SlimefunItemStack(
+                type + "_HEAD",
+                texture,
+                "&f" + Translate.getEntity(de.unpixelt.locale.Locale.zh_tw, type) + GetText.tr(" Head")
+            );
+            new MobHead(
+                itemGroup,
+                item,
+                recipeType,
+                new CustomItemStack(
+                    item,
+                    GetText.tr("&rKill 1 ") + Translate.getEntity(de.unpixelt.locale.Locale.zh_tw, type),
+                    GetText.tr("&7Chance: &e{0}%", chance)
+                )
+            ).register(this, () -> mobs.put(type, item));
+        } catch (Exception x) {
             logger.log(Level.WARNING, x, () -> "Could not load Mob Head for Entity: " + type);
         }
     }
