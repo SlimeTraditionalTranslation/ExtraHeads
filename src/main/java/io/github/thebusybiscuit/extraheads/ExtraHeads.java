@@ -26,7 +26,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.github.bakedlibs.dough.updater.GitHubBuildsUpdaterTR;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.BlobBuildUpdater;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 
@@ -51,8 +51,8 @@ public class ExtraHeads extends JavaPlugin implements SlimefunAddon {
         // Setting up bStats
         new Metrics(this, 5650);
 
-        if (cfg.getBoolean("options.auto-update") && getDescription().getVersion().startsWith("Build_STCT - ")) {
-            new GitHubBuildsUpdaterTR(this, getFile(), "SlimeTraditionalTranslation/ExtraHeads/master").start();
+        if (cfg.getBoolean("options.auto-update") && getDescription().getVersion().startsWith("Dev")) {
+            new BlobBuildUpdater(this, getFile(), "ExtraHeads").start();
         }
 
         GetText.setLocale(Locale.TRADITIONAL_CHINESE);
